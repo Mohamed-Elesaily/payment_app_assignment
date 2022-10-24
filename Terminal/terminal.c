@@ -3,7 +3,8 @@
 EN_terminalError_t getTransactionDate(ST_terminalData_t *termData){
     EN_terminalError_t terminalError = TERMINAL_OK;
     size_t dateSize;
-    //fgets(termData->transactionDate,11*sizeof(uint8_t),stdin);
+    printf("please entre transaction date");
+    fgets(termData->transactionDate,11*sizeof(uint8_t),stdin);
     dateSize = strlen(termData->transactionDate);
     
     if(dateSize !=10) terminalError = WRONG_DATE;
@@ -297,8 +298,4 @@ void isBelowMaxAmountTest(void){
     termdata->transAmount = 200;
     printf("Input Data:%f\n",termdata->transAmount );
     testFormatTerminal(termdata,isBelowMaxAmount,termdata,3);
-}
-int main(){
-   // isCardExpriedTest();
-isBelowMaxAmountTest();
 }

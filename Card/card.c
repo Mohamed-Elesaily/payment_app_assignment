@@ -163,8 +163,8 @@ void testFormat(ST_cardData_t *cardData,EN_cardError_t (* func)(ST_cardData_t *)
 
 
 
-int main(){
-    //getCardHolderNameTest();
-   // getCardExpiryDateTest();
-    getCardPANTest();
-}
+// int main(){
+//     //getCardHolderNameTest();
+//    // getCardExpiryDateTest();
+//     getCardPANTest();
+// }
