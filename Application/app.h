@@ -6,9 +6,10 @@
 #include"server.h"
 #include"terminal.h"
 typedef enum EN_PAYMENT_STATE_t{
-    CARD,TERMINAL,SERVER
+    CARD,TERMINAL,SERVER,END
 }EN_PAYMENT_STATE_t; 
+
 void appInit();
 void appStart(void);
-
+EN_PAYMENT_STATE_t currentState();
 #endif 

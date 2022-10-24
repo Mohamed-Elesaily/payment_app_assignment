@@ -58,6 +58,7 @@ EN_serverError_t isAmountAvailable(ST_terminalData_t *termData, ST_accountsDB_t 
 }
 EN_serverError_t saveTransaction(ST_transaction_t *transData){
     static uint32_t sequence =1;
+    ST_transaction_t loc = *transData;
     transData->transactionSequenceNumber = sequence;
     transactions[sequence-1] = *transData;
     sequence++;
@@ -234,9 +235,6 @@ void listSavedTransactionsTest(void){
     strcpy( trans.cardHolderData.cardHolderName,"mohamed yasser");
     strcpy(trans.cardHolderData.primaryAccountNumber, "12132");
     strcpy(trans.cardHolderData.cardExpirationDate, "05/25");
-    trans.transactionSequenceNumber = 1;
-    
-    transactions[0] =   trans ;
     listSavedTransactions();
 }
 
@@ -256,11 +254,10 @@ void saveTransactionTest(void){
     strcpy(trans.cardHolderData.primaryAccountNumber, "456456");
     strcpy(trans.cardHolderData.cardExpirationDate, "05/25");
     trans.terminalData.transAmount = 500;
-     trans.transactionSequenceNumber =1;
     saveTransaction(&transData);
     trans.terminalData.transAmount = 500;
     strcpy( trans.cardHolderData.cardHolderName,"ahmed");
     strcpy(trans.cardHolderData.primaryAccountNumber, "456456");
     strcpy(trans.cardHolderData.cardExpirationDate, "05/25");
-   saveTransaction(&transData);
+    saveTransaction(&transData);
 }

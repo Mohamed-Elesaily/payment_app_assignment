@@ -16,34 +16,46 @@ ST_transaction_t transData;
 switch (state)
 {
 case CARD:
-    getCardHolderName(&cardData);
-    getCardExpiryDate(&cardData);
-    getCardPAN(&cardData);
-    nextState = TERMINAL;
-        break;
+    if(getCardHolderName(&cardData) == WRONG_NAME){
+        nextState = END;
+            printf("%d h\n\n",nextState); 
+    }
+    if( (getCardExpiryDate(&cardData) == WRONG_EXP_DATE)){
+        nextState = END;
+            printf("%d hhh\n",nextState); 
+    }
+    if(  getCardPAN(&cardData) ==WRONG_PAN ){
+        nextState = END;
+            printf("%d hhhhh\n\n",nextState); 
+    }
+  if(nextState != END)
+     nextState = TERMINAL;
+
+
+    break;
 case TERMINAL:
     if(getTransactionDate(&termData) == WRONG_DATE){
-        nextState = CARD;
+        nextState = END;
     }
-    else if(isCardExpired(&cardData,&termData)==EXPIRED_CARD){
-        nextState = CARD;
+    if(isCardExpired(&cardData,&termData)==EXPIRED_CARD){
+        nextState = END;
     }
-    else if(getTransactionAmount(&termData) == INVALID_AMOUNT){
-        nextState == CARD;
+     if(getTransactionAmount(&termData) == INVALID_AMOUNT){
+        nextState == END;
     }
-    else if(setMaxAmount(&termData,4000) == INVALID_MAX_AMOUNT){
-        nextState == CARD;
+    if(setMaxAmount(&termData,4000) == INVALID_MAX_AMOUNT){
+        nextState == END;
     }
-    else if(isBelowMaxAmount(&termData) == EXCEED_MAX_AMOUNT){
-        nextState == CARD;
+    if(isBelowMaxAmount(&termData) == EXCEED_MAX_AMOUNT){
+        nextState == END;
     }
-    else{
+    if(nextState != END){
         nextState = SERVER;
     }
     break;
 case SERVER:
     recieveTransactionData(&transData);
-    nextState = CARD;
+    nextState = END;
     break;
 default:
     break;
@@ -51,4 +63,8 @@ default:
 
 state  =  nextState;
 
+}
+
+EN_PAYMENT_STATE_t currentState(){
+    return state;
 }

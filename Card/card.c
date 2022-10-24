@@ -21,7 +21,7 @@ EN_cardError_t getCardExpiryDate(ST_cardData_t *cardData){
     fgets(cardData->cardExpirationDate,6*sizeof(uint8_t),stdin);
 
     cardError = dateFormatCheck(cardData->cardExpirationDate);
-
+    printf("%d",cardError);
     return cardError;
 
 
@@ -29,10 +29,10 @@ EN_cardError_t getCardExpiryDate(ST_cardData_t *cardData){
 
 EN_cardError_t getCardPAN(ST_cardData_t *cardData){
     EN_cardError_t cardError;
-    size_t PAN_l = strlen(cardData->primaryAccountNumber); 
+   
     printf(" Please Enter Card PAN:");
     fgets(cardData->primaryAccountNumber,20*sizeof(uint8_t),stdin);
-
+    size_t PAN_l = strlen(cardData->primaryAccountNumber); 
     if((PAN_l>=MIN_PAN) && (PAN_l<=MAX_PAN)) cardError = CARD_OK;
     else cardError = WRONG_PAN;
     for(int i=0;i<PAN_l;i++){
