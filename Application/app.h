@@ -2,6 +2,7 @@
 #define APP_HEADER
 
 #include<stdio.h>
+#include <unistd.h>
 #include"card.h"
 #include"server.h"
 #include"terminal.h"

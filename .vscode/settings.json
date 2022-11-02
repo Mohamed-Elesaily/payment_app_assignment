@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "stdlib.h": "c",
-        "card.h": "c"
+        "card.h": "c",
+        "app.h": "c",
+        "time.h": "c"
     }
 }

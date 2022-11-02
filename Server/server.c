@@ -23,7 +23,6 @@ EN_transState_t recieveTransactionData(ST_transaction_t *transData){
         accountRefrence.balance = accountRefrence.balance - transData->terminalData.transAmount;
    
     }  
-    printf("%s",transStateStringValue[transState]);
     return transState;
 }
 EN_serverError_t isValidAccount(ST_cardData_t *cardData, ST_accountsDB_t *accountRefrence){
@@ -58,7 +57,6 @@ EN_serverError_t isAmountAvailable(ST_terminalData_t *termData, ST_accountsDB_t 
 }
 EN_serverError_t saveTransaction(ST_transaction_t *transData){
     static uint32_t sequence =1;
-    ST_transaction_t loc = *transData;
     transData->transactionSequenceNumber = sequence;
     transactions[sequence-1] = *transData;
     sequence++;
@@ -231,10 +229,15 @@ void listSavedTransactionsTest(void){
       printf("Tester Name: Mohamed Elesaily\n");
     printf("Function Name: listSavedTransactions\n");
     ST_transaction_t trans;
- 
+
     strcpy( trans.cardHolderData.cardHolderName,"mohamed yasser");
     strcpy(trans.cardHolderData.primaryAccountNumber, "12132");
     strcpy(trans.cardHolderData.cardExpirationDate, "05/25");
+    saveTransaction(&trans);
+    strcpy( trans.cardHolderData.cardHolderName,"mohamed yasser");
+    strcpy(trans.cardHolderData.primaryAccountNumber, "12132");
+    strcpy(trans.cardHolderData.cardExpirationDate, "05/25");
+    saveTransaction(&trans);
     listSavedTransactions();
 }
 

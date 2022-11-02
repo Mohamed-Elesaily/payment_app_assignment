@@ -3,8 +3,7 @@
 EN_terminalError_t getTransactionDate(ST_terminalData_t *termData){
     EN_terminalError_t terminalError = TERMINAL_OK;
     size_t dateSize;
-    printf("please entre transaction date");
-    fgets(termData->transactionDate,11*sizeof(uint8_t),stdin);
+
     dateSize = strlen(termData->transactionDate);
     
     if(dateSize !=10) terminalError = WRONG_DATE;
@@ -42,7 +41,6 @@ EN_terminalError_t isCardExpired(ST_cardData_t *cardData, ST_terminalData_t *ter
 
 EN_terminalError_t getTransactionAmount(ST_terminalData_t *termData){
     
-   // scanf("please entre transaction amount:%f",&termData->transAmount);
     if(termData->transAmount  <= 0) return INVALID_AMOUNT;
     return TERMINAL_OK;
 }
