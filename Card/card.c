@@ -36,7 +36,6 @@ EN_cardError_t getCardPAN(ST_cardData_t *cardData){
             break;
         }
     }
-cardError = 0;
     return cardError;
 }
 

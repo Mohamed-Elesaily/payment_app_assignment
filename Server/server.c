@@ -13,16 +13,29 @@ ST_transaction_t transactions[255] = {0};
 EN_transState_t recieveTransactionData(ST_transaction_t *transData){
     EN_transState_t transState;
     ST_accountsDB_t accountRefrence;
-    if(isValidAccount(&transData->cardHolderData,&accountRefrence) == ACCOUNT_NOT_FOUND) transState = FRAUD_CARD;
-    else if(isAmountAvailable(&transData->terminalData, &accountRefrence) == LOW_BALANCE) transState = DECLINED_INSUFFECIENT_FUND;
-    else if(isBlockedAccount(&accountRefrence) == BLOCKED_ACCOUNT) transState = DECLINED_STOLEN_CARD;
-    else if(saveTransaction(transactions) == SAVING_FAILED) transState = INTERNAL_SERVER_ERROR;
-    else transState = APPROVED;
-
+    if(isValidAccount(&transData->cardHolderData,&accountRefrence) == ACCOUNT_NOT_FOUND){
+        transState = FRAUD_CARD;
+        printf("ACCOUNT_NOT_FOUND\n");
+        }
+    else if(isAmountAvailable(&transData->terminalData, &accountRefrence) == LOW_BALANCE){ 
+        transState = DECLINED_INSUFFECIENT_FUND;
+         printf("DECLINED_INSUFFECIENT_FUND\n");
+        }
+    else if(isBlockedAccount(&accountRefrence) == BLOCKED_ACCOUNT) {
+        transState = DECLINED_STOLEN_CARD;
+        printf("DECLINED_STOLEN_CARD\n");
+        }
+    else if(saveTransaction(transData) == SAVING_FAILED) {
+        transState = INTERNAL_SERVER_ERROR;
+        printf("INTERNAL_SERVER_ERROR\n");
+        }
+    else{
+        transState = APPROVED;
+        printf("APPROVED \n");
+}
     if(transState == APPROVED){
         accountRefrence.balance = accountRefrence.balance - transData->terminalData.transAmount;
-   
-    }  
+    } 
     return transState;
 }
 EN_serverError_t isValidAccount(ST_cardData_t *cardData, ST_accountsDB_t *accountRefrence){
@@ -30,7 +43,7 @@ EN_serverError_t isValidAccount(ST_cardData_t *cardData, ST_accountsDB_t *accoun
     EN_serverError_t serverError = ACCOUNT_NOT_FOUND;
     uint8_t index=0;
     for(int i=0;i<DB_length;i++){
-       
+    
         if(strcmp((accountsDB[i].primaryAccountNumber),cardData->primaryAccountNumber) == 0){
             serverError = SERVER_OK;   
             index = i;   
@@ -52,23 +65,24 @@ return SERVER_OK;
 }
 EN_serverError_t isAmountAvailable(ST_terminalData_t *termData, ST_accountsDB_t *accountRefrence){
     if(termData->transAmount <= accountRefrence->balance) return SERVER_OK;
-    printf("%f",accountRefrence->balance);
+
     return LOW_BALANCE;
 }
 EN_serverError_t saveTransaction(ST_transaction_t *transData){
-    static uint32_t sequence =1;
+    static uint32_t sequence =0;
+    sequence++;
     transData->transactionSequenceNumber = sequence;
     transactions[sequence-1] = *transData;
-    sequence++;
+
     listSavedTransactions();
     return SERVER_OK;
 }
 void listSavedTransactions(void){
-   for(int i=0;i<10;i++){
+   for(int i=0;i<255;i++){
     if(transactions[i].transactionSequenceNumber !=0){
         printf("Transaction Sequence Number: %d \n",(int)transactions[i].transactionSequenceNumber);
         printf("Transaction Amount: %f \n",transactions[i].terminalData.transAmount);
-        printf("Transaction State:%s \n",transStateStringValue[transactions[0].transState]);
+        printf("Transaction State:%s \n",transStateStringValue[transactions[i].transState]);
         printf("Terminal Max Amount:%f \n",transactions[i].terminalData.maxTransAmount);
         printf("Cardholder Name:");
         puts(transactions[i].cardHolderData.cardHolderName);
@@ -194,14 +208,16 @@ void isBlockedAccountTest(void){
 }
 void isAmountAvailableTest(void){
         ST_accountsDB_t accountRefrence;
-  
+  ST_terminalData_t termData;
     printf("Tester Name: Mohamed Elesaily\n");
     printf("Function Name: isAmountAvailable\n");
 
     printf("Test Case %d:\n",1);
-    printf("Input Data: RUNNING\n");
+    printf("Input Data: 100\n");
     accountRefrence = accountsDB[0];
-    if(isBlockedAccount(&accountRefrence)== SERVER_OK){
+    termData.transAmount = 100;
+    
+    if(isAmountAvailable(&termData,&accountRefrence)== SERVER_OK){
         printf("Expected Result: OK\n");
         printf("Actual Result: OK\n");
     }
@@ -211,9 +227,10 @@ void isAmountAvailableTest(void){
         printf("Actual Result: NOK\n");
     }
 
-     printf("Input Data: BLOCKED\n");
-    accountRefrence = accountsDB[1];
-    if(isBlockedAccount(&accountRefrence)== BLOCKED_ACCOUNT){
+     printf("Input Data: 3000\n");
+     termData.transAmount = 3000;
+    
+    if(isAmountAvailable(&termData,&accountRefrence)== LOW_BALANCE){
         printf("Expected Result: OK\n");
         printf("Actual Result: OK\n");
     }

@@ -1,0 +1,20 @@
+Transaction approved user story
+1- pan 8989374615436851
+2- amount 300
+
+Exceed the maximum amount user story
+1- pan 7894007076043875
+2- amount 5000
+
+Insufficient fund user story
+1- pan 7894007076043875
+2- amount 200
+
+Expired card user story
+1- pan 8989374615436851
+2- 05/11/2023 05/21
+
+
+Stolen card user story:
+1- pan 5807007076043875 blocked
+

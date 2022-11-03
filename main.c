@@ -5,10 +5,13 @@ int main(){
 
     while (1)
     {
+
         appStart();
+       
         if(currentState() == END) break;
     }
+
+
     return 0;
 
- //  listSavedTransactionsTest(); 
 }
