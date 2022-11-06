@@ -3,6 +3,7 @@
         "stdlib.h": "c",
         "card.h": "c",
         "app.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "server.h": "c"
     }
 }

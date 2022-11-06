@@ -3,8 +3,8 @@
 
 #include<stdio.h>
 #include<stdint.h>
-#include"card.h"
-#include"terminal.h"
+#include"../Card/card.h"
+#include"../Terminal/terminal.h"
 typedef enum EN_transState_t
 {
      APPROVED, DECLINED_INSUFFECIENT_FUND, DECLINED_STOLEN_CARD, FRAUD_CARD, INTERNAL_SERVER_ERROR

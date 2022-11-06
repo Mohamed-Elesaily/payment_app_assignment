@@ -3,9 +3,9 @@
 
 #include<stdio.h>
 #include <unistd.h>
-#include"card.h"
-#include"server.h"
-#include"terminal.h"
+#include"../Card/card.h"
+#include"../Server/server.h"
+#include"../Terminal/terminal.h"
 typedef enum EN_PAYMENT_STATE_t{
     CARD,TERMINAL,SERVER,END
 }EN_PAYMENT_STATE_t; 
