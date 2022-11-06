@@ -10,8 +10,6 @@ int main(){
        
         if(currentState() == END) break;
     }
-
-
     return 0;
 
 }

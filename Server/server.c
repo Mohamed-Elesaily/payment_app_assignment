@@ -226,7 +226,7 @@ void isAmountAvailableTest(void){
         printf("Expected Result: NOK\n");    
         printf("Actual Result: NOK\n");
     }
-
+    printf("Test Case %d:\n",2);
      printf("Input Data: 3000\n");
      termData.transAmount = 3000;
     
@@ -239,7 +239,47 @@ void isAmountAvailableTest(void){
         printf("Expected Result: NOK\n");    
         printf("Actual Result: NOK\n");
     }
+///////////////////////////////////////new test cases//////////////////////////
+    printf("Test Case %d:\n",3);
+    printf("Input Data: 0\n");
+    termData.transAmount = 0;
+    accountRefrence.balance = 0;
+    if(isAmountAvailable(&termData,&accountRefrence)== SERVER_OK){
+        printf("Expected Result: OK\n");
+        printf("Actual Result: OK\n");
+    }
 
+    else{
+        printf("Expected Result: NOK\n");    
+        printf("Actual Result: NOK\n");
+    }
+    printf("Test Case %d:\n",4);
+    printf("Input Data: 500 and balance 100\n");
+    termData.transAmount = 500;
+    accountRefrence.balance = 100;
+    if(isAmountAvailable(&termData,&accountRefrence)== SERVER_OK){
+        printf("Expected Result: OK\n");
+        printf("Actual Result: OK\n");
+    }
+
+    else{
+        printf("Expected Result: NOK\n");    
+        printf("Actual Result: NOK\n");
+    }
+
+    printf("Test Case %d:\n",5);
+    printf("Input Data:50 and balance 100 \n");
+    termData.transAmount = 50;
+    accountRefrence.balance = 100;
+    if(isAmountAvailable(&termData,&accountRefrence)== SERVER_OK){
+        printf("Expected Result: OK\n");
+        printf("Actual Result: OK\n");
+    }
+
+    else{
+        printf("Expected Result: NOK\n");    
+        printf("Actual Result: NOK\n");
+    }
 
 }
 void listSavedTransactionsTest(void){
